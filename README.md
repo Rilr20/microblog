@@ -106,3 +106,12 @@ This is a co-effort of several people using freely available documentation and t
 For contributors, see commit history and issues.
 
 Feel free to help building up the repository with more content suited for training and education.
+
+# Driftsätt uppdateringar
+
+--Glöm inte att aktivera venv.--
+
+sudo supervisorctl stop microblog     # stop the current server
+git pull                              # download the new version
+flask db upgrade                      # upgrade the database
+sudo supervisorctl start microblog    # start a new server
