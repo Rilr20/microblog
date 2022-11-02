@@ -87,6 +87,8 @@ def edit_profile():
     return render_template('edit_profile.html', title='Edit Profile',
                            form=form)
 
+
+
 @bp.route('/follow/<username>')
 @login_required
 def follow(username):
@@ -104,6 +106,8 @@ def follow(username):
     db.session.commit()
     flash(f'You are following {username}')
     return redirect(url_for('main.user',username=username))
+
+
 
 @bp.route('/unfollow/<username>')
 @login_required
