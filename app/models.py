@@ -71,7 +71,7 @@ class User(UserMixin, db.Model):
         if not self.is_following(user):
             self.followed.append(user)
 
-    def followerCount(self, user): 
+    def followerCount(self, user): # pylint: disable=unused-argument
         """
         returns how many follows you
         """
