@@ -71,6 +71,18 @@ class User(UserMixin, db.Model):
         if not self.is_following(user):
             self.followed.append(user)
 
+    def followerCount(self, user): 
+        """
+        returns how many follows you
+        """
+        return self.followers.count()
+
+    def followingCount(self, user): 
+        """
+        returns how many you follow
+        """
+        return self.followed.filter(followers.c.follower_id == user.id).count()
+
     def unfollow(self, user):
         """
         removes user from followed
