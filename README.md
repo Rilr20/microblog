@@ -1,5 +1,10 @@
+
+[![Python package](https://github.com/Rilr20/microblog/actions/workflows/main.yml/badge.svg)](https://github.com/Rilr20/microblog/actions/workflows/main.yml)
+===================
+
 Microblog
 ===================
+
 
 [![Join the chat at https://gitter.im/dbwebb-se/devops](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dbwebb-se/devops?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
