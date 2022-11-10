@@ -11,26 +11,13 @@ jobs:
     name: build docker container
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-
-      - name: Log in to Dockerhub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images:  ${{ secrets.DOCKER_USERNAME }}/microblog
-
       - name: Checkout code
         uses: actions/checkout@v2
       - name: publish 
         uses: docker/build-push-action@v3
         with:
           file: ./docker/Dockerfile_prod
-          tags: ${{ secrets.DOCKER_USERNAME }}/microblog:latest,${{ secrets.DOCKER_USERNAME }}/microblog:${{ steps.meta.outputs.tags }}-prod
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/microblog:latest,${{ secrets.DOCKER_USERNAME }}/microblog:${{  github.ref_name }}-prod
           push: true
