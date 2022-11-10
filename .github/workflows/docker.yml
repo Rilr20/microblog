@@ -11,8 +11,10 @@ jobs:
     name: build docker container
     runs-on: ubuntu-latest
     steps:
-      - run: echo $GITHUB_REF
-      - run: echo ${{ steps.meta.outputs.tags }}
+      - name: GitHub Tag Name example
+        run: |
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
       - name: Checkout code
         uses: actions/checkout@v2
       - name: publish 
