@@ -23,5 +23,5 @@ jobs:
           file: ./docker/Dockerfile_prod
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          tags: ${{ secrets.DOCKER_USERNAME }}/microblog:latest,${{ secrets.DOCKER_USERNAME }}/microblog:${{ steps.meta.outputs.tags }}-prod
+          tags: ${{ secrets.DOCKER_USERNAME }}/microblog:latest,${{ secrets.DOCKER_USERNAME }}/microblog:${{  github.ref_name }}-prod
           push: true
