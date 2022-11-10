@@ -19,12 +19,18 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-  
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: my-docker-hub-namespace/my-docker-hub-repository
+
       - name: Checkout code
         uses: actions/checkout@v2
       - name: publish 
         uses: docker/build-push-action@v3
         with:
           file: ./docker/Dockerfile_prod
-          tags: ${{ secrets.DOCKER_USERNAME }}/microblog:latest,${{ secrets.DOCKER_USERNAME }}/microblog:${{  github.ref_name }}-prod
+          tags: ${{ secrets.DOCKER_USERNAME }}/microblog:latest,${{ secrets.DOCKER_USERNAME }}/microblog:${{ steps.meta.outputs.tags }}-prod
           push: true
