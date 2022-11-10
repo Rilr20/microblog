@@ -24,7 +24,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: my-docker-hub-namespace/my-docker-hub-repository
+          images:  ${{ secrets.DOCKER_USERNAME }}/microblog
 
       - name: Checkout code
         uses: actions/checkout@v2
