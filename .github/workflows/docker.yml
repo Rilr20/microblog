@@ -19,5 +19,6 @@ jobs:
           file: ./docker/Dockerfile_prod
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          tags:  ${{steps.tag.outputs.tag}}
+          tags:  ${{ secrets.DOCKER_USERNAME }}/microblog:${{steps.tag.outputs.tag}}
           push: true
+          run: echo ${{steps.tag.outputs.tag}}
