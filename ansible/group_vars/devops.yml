@@ -1,0 +1,13 @@
+---
+root_password: $6$L/TKA51mo0Z3MStJ$hYcsxzna2.OffhjfeRUIzNuwFmn4PjHlZDOPL13LWM5g8WZCDuxC/Ujdh/XCculLmY0WXvA2EOOXu2iR2ZHdd/
+
+admin_email: rilr20@student.bth.se
+
+root_user: azureuser
+server_user: deploy
+server_user_pass: $6$sxRyGIX/ChhDGEwA$4H3HNQ5cVGCuMDeSZ2CvhbdTLoRBAdUNWCjzaWcN6OwQlbmlSyvsG/G7Ff7GPnTjL9ditOeMUp.peWqV2rxYH1
+server_user_groups:
+    -   sudo
+
+pub_ssh_key_location:
+    -   ~/.ssh/azure.pub
