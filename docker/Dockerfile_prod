@@ -24,7 +24,7 @@ RUN <<-EOF
     chmod +x boot.sh
 EOF
 
-USER ["app", "tests"]
+USER microblog
 
 EXPOSE 5000
 
