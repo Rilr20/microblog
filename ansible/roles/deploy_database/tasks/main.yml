@@ -12,7 +12,7 @@
     image: mysql/mysql-server:5.7
     volumes:
       - /mysqldb:/var/lib/mysql
-    exposed_ports: 3306:3306
+    ports: 3306:3306
     env:
       MYSQL_DATABASE: "microblog"
       MYSQL_ROOT_PASSWORD: "{{mysql_root_password}}"
