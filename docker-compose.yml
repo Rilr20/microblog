@@ -1,10 +1,32 @@
 version: "3"
 
+networks:
+  monitor:
 
 services:
+  node-exporter:
+    image: prom/node-exporter:v1.2.2
+    container_name: node_exporter
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    ports: 
+      - "9100:9100"
+    networks:
+      - monitor
 
   production:
-    image: richpotato/microblog:1.0.0-prod
+    image: richpotato/microblog:flask-exporter
+    # build:
+    #   context: .
+    #   dockerfile: docker/Dockerfile_prod
     container_name: microblog
     ports: 
       - "8000:5000"
@@ -16,6 +38,38 @@ services:
       - database
     restart:
       "always"
+
+  prometheus:
+    image: prom/prometheus:v2.31.1
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command: 
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--storage.tsdb.retention.time=24h"
+      - "--web.enable-lifecycle"
+    networks:
+      - monitor
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:8.2.4
+    restart: unless-stopped
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - monitor
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      
+
 
   database:
     image: mysql/mysql-server:5.7
@@ -39,3 +93,5 @@ services:
 
 volumes:
   mysqldb:
+  prometheus-data: {}
+  grafana-data: {}
