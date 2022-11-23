@@ -8,7 +8,7 @@
 - name: start container
   docker_container:
     name: microblog
-    image: richpotato/microblog:latest
+    image: richpotato/microblog:flask-exporter
     ports: 
       - "8000:5000"
     env:
