@@ -1,0 +1,10 @@
+---
+- hosts: monitoring
+  remote_user: "{{ server_user }}"
+  become: yes
+  become_method: sudo
+  roles: 
+    - install_docker
+    - node_exporter
+    - grafana
+    - prometheus

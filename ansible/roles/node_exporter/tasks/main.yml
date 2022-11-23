@@ -1,0 +1,27 @@
+---
+-   name: Create a Docker network
+    docker_network:
+        name: monitor
+
+- name: log into docker hub
+  docker_login:
+    username: "{{ docker_username }}"
+    password: "{{ docker_password }}"
+
+- name: start node exporter
+  docker_container:
+    name: node_exporter
+    image: prom/node-exporter:v1.2.2
+    ports:
+      - "9100:9100"
+    volumes: 
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command: 
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    network_mode: host
+    restart_policy: unless-stopped
