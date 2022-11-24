@@ -8,6 +8,12 @@
     username: "{{ docker_username }}"
     password: "{{ docker_password }}"
 
+-   name: Grafana template
+    template:
+        src: templates/grafana.ini.j2
+        dest: /tmp/grafana.ini
+        force: yes
+
 - name: start grafana
   docker_container:
     name: grafana
@@ -15,6 +21,7 @@
     restart_policy: unless-stopped
     volumes: 
       - grafana-data:/var/lib/grafana
+      - /tmp/grafana.ini:/etc/grafana/grafana.ini
     network_mode: host
     ports:
       - "3000:3000"

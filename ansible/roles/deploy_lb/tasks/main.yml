@@ -52,3 +52,17 @@
     src: /etc/nginx/sites-available/load-balancer.conf
     path: /etc/nginx/sites-enabled/load-balancer.conf
     state: link
+
+-   name: Create nginx prometheus exporter
+    docker_container:
+        name: nginx-prometheus
+        image: nginx/nginx-prometheus-exporter:0.4.2
+        ports:
+            - "9113:9113"
+        restart_policy: always
+        state: started
+        command:
+            -nginx.scrape-uri=https://{{ domain_name }}/metrics
+            -nginx.retries=10
+            -nginx.ssl-verify=false
+            -web.telemetry-path=/prometheus
