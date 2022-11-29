@@ -41,9 +41,10 @@ def test_avatar(test_app, user1):
     """
     Test creation of Gravatar URL
     """
-    assert user1.avatar(128) == ('https://www.gravatar.com/avatar/'
-                                 'd4c74594d841139328695756648b6bd6'
-                                 '?d=retro&s=128')
+    assert user1.avatar(128) == (
+        'https://www.gravatar.com/avatar/855f96e983f1f8e8be'+
+        '944692b6f719fd54329826cb' +
+        '62e98015efee8e2e071dd4?d=retro&s=128')
 
 def test_follow(test_app): # pylint: disable=unused-argument
     """

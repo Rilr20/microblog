@@ -155,6 +155,7 @@ exec-tests: test-unit test-integration
 test: validate exec-tests
 	${py} -m coverage report  --rcfile=.coveragerc
 	$(MAKE) clean-cov
+	$(MAKE) bandit
 
 
 
@@ -217,3 +218,7 @@ install-test:
 install-deploy:
 	${pip} install -r requirements/deploy.txt
 	cd ansible && ansible-galaxy install -r requirements.yml
+
+# target: bandit validation
+.PHONY: bandit validation
+	bandir -r app
