@@ -11,6 +11,8 @@
 # Set default target
 .DEFAULT_GOAL := test
 
+export PROMETHEUS_MULTIPROC_DIR=/tmp
+
 # Decide if use python3 or python
 ifeq (, $(@shell which python3))
 	py = python3
@@ -77,7 +79,7 @@ help:
 .PHONY: add-ssh
 add-ssh:
 	eval `ssh-agent -s`
-	ssh-add <path/too/ssh-key>
+	ssh-add ~/.ssh/azure
 
 
 
