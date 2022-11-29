@@ -1,4 +1,5 @@
 name: "Snyk Python (3.8)"
+on: [push]
 description: "Check your Python application for vulnerabilties using Snyk"
 author: "Gareth Rushgrove"
 branding:
