@@ -26,6 +26,11 @@
         src: files/apt_periodic_50
         dest: /etc/apt/apt.conf.d/50unattended-upgrades
 
+-   name: Copy sshd_config
+    copy:
+        src: files/sshd_config
+        dest: /etc/ssh/sshd_config 
+
 -   name: Create users
     user: 
         name: "{{ server_user }}"
