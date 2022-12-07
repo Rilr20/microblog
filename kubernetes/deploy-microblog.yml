@@ -14,7 +14,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: microblog
-specs:
+spec:
   selector:
     matchLabels:
       app: microblog
@@ -23,16 +23,14 @@ specs:
     metadata:
       labels:
         app: microblog
-    specs:
+    spec:
       containers:
         - image: richpotato/microblog:latest
           imagePullPolicy: Always
           name: microblog
           env:
-            - name: SECRET_KEY
-              value: password
             - name: DATABASE_URL
-              value: mysql+pymysql://microblog:password@mysql/microblog
+              value: mysql+pymysql://microblog:micropassw@mysql/microblog
           ports:
             - containerPort: 5000
           livenessProbe:

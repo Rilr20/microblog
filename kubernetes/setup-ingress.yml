@@ -5,7 +5,7 @@ metadata:
   name: microblog
   annotations:
     kubernetes.io/ingress.class: "nginx" # kopplar vår ingress till den installerade nginx-ingress
-    cert-manager.io/issuer: "letsencrypt-prod"
+    # cert-manager.io/issuer: "letsencrypt-prod"
 
 spec:
   tls: # sätter att vi ska bara acceptera https trafik till er domän
@@ -22,4 +22,4 @@ spec:
           service:
             name: microblog
             port:
-              number: 80
+              number: 5000
