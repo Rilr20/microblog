@@ -2,38 +2,55 @@ apiVersion: v1
 kind: Service
 metadata:
   name: microblog
+  labels:
+    app: microblog
 spec:
-  ports:
-  - port: 80
-    targetPort: 5000
-    protocol: TCP
   selector:
     app: microblog
+    tier: frontend
+  type: ClusterIP
+  ports:
+    - port: 5000
+      protocol: TCP
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
   name: microblog
+  labels:
+    app: microblog
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: microblog
-  replicas: 2
+      tier: frontend
   template:
     metadata:
       labels:
         app: microblog
+        tier: frontend
     spec:
       containers:
-        - image: richpotato/microblog:latest
-          imagePullPolicy: Always
+      - image: richpotato/microblog:latest
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+        name: microblog
+        env:
+        # - name: DATABASE_URL
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: mysql-secrets
+        #       key: DATABASE_URL
+        - name: DATABASE_URL
+          value: mysql+pymysql://microblog:micropassw@mysql:3306/microblog
+        ports:
+        - containerPort: 5000
           name: microblog
-          env:
-            - name: DATABASE_URL
-              value: mysql+pymysql://microblog:micropassw@mysql/microblog
-          ports:
-            - containerPort: 5000
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 5000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
